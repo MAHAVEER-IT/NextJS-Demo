@@ -1,22 +1,22 @@
 'use client'
-import React from 'react'
+import React,{useState} from 'react'
 import { useSession, signIn, signOut } from "next-auth/react"
 import Image from 'next/image'
 import Link from 'next/link'
 
 function Navbar() {
-
     const { data: session } = useSession()
+    const [showDropdown, setShowDropdown] = useState(false);
     if (session) {
         return <nav className="flex justify-between bg-gray-800 text-white p-3 text-xl">
 
             <div>
 
-                <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
+                <button  className="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button" onClick={()=>setShowDropdown(true)}>
                     <span className="sr-only">Open user menu</span>
                     <Image src={session.user?.image} alt='user image' height={40} width={40} className='rounded-full outline-2 outline-white' />
                 </button>
-
+                { showDropdown && (
                 <div id="dropdownAvatar" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
                     <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
                         <div>Bonnie Green</div>
@@ -37,6 +37,7 @@ function Navbar() {
                         <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
                     </div>
                 </div>
+                )}
 
 
 
